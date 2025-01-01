@@ -1,5 +1,6 @@
 # 1000usersAD
-Creating 1,000 bulk users using a script in active directory
+Creating 1,000 bulk users using a script in Active Directory
+
 # Active Directory Implementation with Bulk User Creation (1,000 Users)
 
 ## Project Summary
@@ -20,20 +21,14 @@ This project demonstrates the implementation of an Active Directory environment 
 
 ## Media
 
-### Step 1: Install
-ing Active Directory Domain Services
-![AD Installation](<img width="1246" alt="Screenshot 2025-01-01 at 3 32 02 PM" src="https://github.com/user-attachments/assets/f9da018d-19b4-474b-a782-2171173f1353" />)
+### Step 1: Installing Active Directory Domain Services
+![AD Installation](images/ad-installation.png)
 
 ### Step 2: Running the Bulk User Creation Script
-![Bulk User Script](<img width="1245" alt="Screenshot 2025-01-01 at 3 45 02 PM" src="https://github.com/user-attachments/assets/635fedeb-1471-4a88-be5b-8be9301f5e4b" />)
-
+![Bulk User Script](images/powershell-script.png)
 
 ### Step 3: Verifying Users in Active Directory
-![User List](<img width="1245" alt="Screenshot 2025-01-01 at 3 48 25 PM" src="https://github.com/user-attachments/assets/63ac40a7-bb43-4be2-975b-f515f39cd0b4" />)
-
-
-### Video Walkthrough
-[![Active Directory User Creation Demo](images/video-thumbnail.png)](https://youtu.be/examplelink)
+![User List](images/user-list.png)
 
 ---
 
@@ -44,33 +39,55 @@ ing Active Directory Domain Services
 2. Configured a new domain `example.local`.
 
 ### Step 2: Preparing the User Creation Script
-1. Created a CSV file with 1,000 user details (`users.csv`).
-2. Developed a PowerShell script to read the CSV and create users in Active Directory.
-
-**Sample CSV (`users.csv`):**
-```csv
-FirstName,LastName,Username,Password
-John,Doe,john.doe,Password123!
-Jane,Doe,jane.doe,Password123!
-...
-```
+1. Used the PowerShell script below to generate 1,000 users with random names.
 
 **PowerShell Script (`Create-Users.ps1`):**
 ```powershell
-# Import the CSV file
-$users = Import-Csv -Path "C:\Users.csv"
+# ----- Edit these Variables for your own Use Case ----- #
+$PASSWORD_FOR_USERS   = "Password1"
+$NUMBER_OF_ACCOUNTS_TO_CREATE = 10000
+# ------------------------------------------------------ #
 
-# Loop through each user and create them in Active Directory
-foreach ($user in $users) {
-    New-ADUser `
-        -GivenName $user.FirstName `
-        -Surname $user.LastName `
-        -Name "$($user.FirstName) $($user.LastName)" `
-        -SamAccountName $user.Username `
-        -UserPrincipalName "$($user.Username)@example.local" `
-        -AccountPassword (ConvertTo-SecureString $user.Password -AsPlainText -Force) `
-        -Enabled $true
-    Write-Host "Created user: $($user.FirstName) $($user.LastName)"
+Function generate-random-name() {
+    $consonants = @('b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','z')
+    $vowels = @('a','e','i','o','u','y')
+    $nameLength = Get-Random -Minimum 3 -Maximum 7
+    $count = 0
+    $name = ""
+
+    while ($count -lt $nameLength) {
+        if ($($count % 2) -eq 0) {
+            $name += $consonants[$(Get-Random -Minimum 0 -Maximum $($consonants.Count - 1))]
+        }
+        else {
+            $name += $vowels[$(Get-Random -Minimum 0 -Maximum $($vowels.Count - 1))]
+        }
+        $count++
+    }
+
+    return $name
+
+}
+
+$count = 1
+while ($count -lt $NUMBER_OF_ACCOUNTS_TO_CREATE) {
+    $firstName = generate-random-name
+    $lastName = generate-random-name
+    $username = $firstName + '.' + $lastName
+    $password = ConvertTo-SecureString $PASSWORD_FOR_USERS -AsPlainText -Force
+
+    Write-Host "Creating user: $($username)" -BackgroundColor Black -ForegroundColor Cyan
+    
+    New-AdUser -AccountPassword $password `
+               -GivenName $firstName `
+               -Surname $lastName `
+               -DisplayName $username `
+               -Name $username `
+               -EmployeeID $username `
+               -PasswordNeverExpires $true `
+               -Path "ou=_EMPLOYEES,$(([ADSI]`"").distinguishedName)" `
+               -Enabled $true
+    $count++
 }
 ```
 
@@ -86,7 +103,7 @@ foreach ($user in $users) {
 ---
 
 ### Additional Notes
-- **Script Location**: The PowerShell script and CSV file are located in the `scripts` folder of this repository.
+- **Script Location**: The PowerShell script and related assets are located in the `scripts` folder of this repository.
 - **Customization**: The script can be adapted for specific user attributes, such as department or group membership.
 
 ---
@@ -100,21 +117,14 @@ ActiveDirectory-1000Users/
 |   |-- ad-installation.png
 |   |-- powershell-script.png
 |   |-- user-list.png
-|   |-- video-thumbnail.png
 |-- scripts/
     |-- Create-Users.ps1
-    |-- users.csv
 ```
 
 ---
 
 ## How to Use
 1. Clone the repository.
-2. Update the CSV file (`users.csv`) with your desired user details.
+2. Modify the script as needed for your environment.
 3. Run the PowerShell script (`Create-Users.ps1`) on a Windows Server with Active Directory installed.
 4. Verify the users in the Active Directory Users and Computers (ADUC) console.
-
----
-
-## Video Demonstration
-A detailed walkthrough of the implementation can be found here: [YouTube Video Link](https://youtu.be/examplelink).
