@@ -20,14 +20,17 @@ This project demonstrates the implementation of an Active Directory environment 
 
 ## Media
 
-### Step 1: Installing Active Directory Domain Services
-![AD Installation](images/ad-installation.png)
+### Step 1: Install
+ing Active Directory Domain Services
+![AD Installation](<img width="1246" alt="Screenshot 2025-01-01 at 3 32 02 PM" src="https://github.com/user-attachments/assets/f9da018d-19b4-474b-a782-2171173f1353" />)
 
 ### Step 2: Running the Bulk User Creation Script
-![Bulk User Script](images/powershell-script.png)
+![Bulk User Script](<img width="1245" alt="Screenshot 2025-01-01 at 3 45 02 PM" src="https://github.com/user-attachments/assets/635fedeb-1471-4a88-be5b-8be9301f5e4b" />)
+
 
 ### Step 3: Verifying Users in Active Directory
-![User List](images/user-list.png)
+![User List](<img width="1245" alt="Screenshot 2025-01-01 at 3 48 25 PM" src="https://github.com/user-attachments/assets/63ac40a7-bb43-4be2-975b-f515f39cd0b4" />)
+
 
 ### Video Walkthrough
 [![Active Directory User Creation Demo](images/video-thumbnail.png)](https://youtu.be/examplelink)
