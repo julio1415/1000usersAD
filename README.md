@@ -22,16 +22,29 @@ This project demonstrates the implementation of an Active Directory environment 
 ## Media
 
 ### Step 1: Installing Active Directory Domain Services
-![AD Installation](<img width="1246" alt="ActiveDirectory" src="https://github.com/user-attachments/assets/7d3e19a0-2153-427e-83a6-defeb76d8501" />)
-
-
+![Active Directory Dashboard](images/ActiveDirectory.png)
 
 ### Step 2: Running the Bulk User Creation Script
-![Bulk User Script](<img width="1245" alt="Runningcode.png" src="https://github.com/user-attachments/assets/8ea923e5-5241-455a-81c4-b6f34795a83a" />)
+![Running PowerShell Script](images/Runningcode.png)
 
 ### Step 3: Verifying Users in Active Directory
-![User List](<img width="1245" alt="verifyingusers.png" src="https://github.com/user-attachments/assets/64ffed7a-ba1c-4081-ac58-af7756178411" />)
+![Verifying Users](images/verifyingusers.png)
 
+---
+
+## Active Directory Organizational Units (OUs)
+
+The following organizational units (OUs) are present in the Active Directory structure:
+
+- **mydomain.com**
+  - **Builtin** (Default system OU)
+  - **Computers** (Default system OU)
+  - **Domain Controllers** (Default system OU for domain controllers)
+  - **ForeignSecurityPrincipals** (Default system OU for foreign security principals)
+  - **Managed Service Accounts** (Default system OU for managed service accounts)
+  - **Users** (Default system OU for default and manually added users)
+  - **_EMPLOYEES** (Custom OU for employee accounts)
+  - **_ADMINS** (Custom OU for administrative accounts)
 
 ---
 
@@ -117,9 +130,9 @@ while ($count -lt $NUMBER_OF_ACCOUNTS_TO_CREATE) {
 ActiveDirectory-1000Users/
 |-- README.md
 |-- images/
-|   |-- ad-installation.png
-|   |-- powershell-script.png
-|   |-- user-list.png
+|   |-- ActiveDirectory.png
+|   |-- Runningcode.png
+|   |-- verifyingusers.png
 |-- scripts/
     |-- Create-Users.ps1
 ```
